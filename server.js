@@ -33,7 +33,7 @@ app.get('/products/sr-cr-pr-pellets', (req, res) => {
   res.render('products/sr-cr-pr-pellets', { title: 'SR/CR/PR Pellets - Artemisia Pharma' });
 });
 app.get('/products/dr-ec-pellets', (req, res) => {
-  res.render('products/dr-ec-pellets', { title: 'DR/EC Pellets - Artemisia Pharma' });
+res.render('products/dr-ec-pellets', { title: 'EC/DR Pellets - Artemisia Pharma' });
 });
 app.get('/products/granules', (req, res) => {
   res.render('products/granules', { title: 'Granules - Artemisia Pharma' });

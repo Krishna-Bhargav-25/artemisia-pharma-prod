@@ -24,7 +24,7 @@ const pages = [
   { view: 'products/index', out: 'products/index.html', data: { title: 'Products - Artemisia Pharma' } },
   { view: 'products/ir-pellets', out: 'products/ir-pellets/index.html', data: { title: 'IR Pellets - Artemisia Pharma' } },
   { view: 'products/sr-cr-pr-pellets', out: 'products/sr-cr-pr-pellets/index.html', data: { title: 'SR/CR/PR Pellets - Artemisia Pharma' } },
-  { view: 'products/dr-ec-pellets', out: 'products/dr-ec-pellets/index.html', data: { title: 'DR/EC Pellets - Artemisia Pharma' } },
+{ view: 'products/dr-ec-pellets', out: 'products/dr-ec-pellets/index.html', data: { title: 'EC/DR Pellets - Artemisia Pharma' } },
   { view: 'products/granules', out: 'products/granules/index.html', data: { title: 'Granules - Artemisia Pharma' } },
   { view: 'contact', out: 'contact/index.html', data: { title: 'Contact Us - Artemisia Pharma', sent: null, error: null } },
 ];
