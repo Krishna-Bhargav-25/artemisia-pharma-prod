@@ -11,9 +11,11 @@ a:hover{color:var(--brand-blue)}
 
 /* Header */
 header{position:sticky;top:0;background:linear-gradient(180deg, #ffffffee, #ffffffd9);backdrop-filter:saturate(180%) blur(6px);border-bottom:1px solid var(--border);z-index:10}
-nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
 .brand{display:flex;align-items:center;gap:12px;font-weight:800;color:var(--brand-blue)}
-.brand img{height:56px;max-height:56px;width:auto;display:block;filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.08));transition:transform .2s var(--ease-standard), filter .2s var(--ease-standard)}
+.brand-name{font-weight:800;letter-spacing:.2px;color:var(--Primary-Brand);font-size:20px;line-height:1}
+.brand img{height:72px;max-height:72px;width:auto;display:block;filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.12));transition:transform .2s var(--ease-standard), filter .2s var(--ease-standard)}
+@media (max-width: 520px){ .brand img{height:56px;max-height:56px} }
 .brand:hover img{transform:translateY(-2px);filter:drop-shadow(0 3px 10px rgba(27,74,142,.25))}
 nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0}
 nav a{position:relative;padding:6px 2px;color:#0f172a;transition:color .2s var(--ease-standard)}
