@@ -1,7 +1,7 @@
 <%- include('../partials/header', { title }) %>
 <section class="reveal">
   <h1>Products</h1>
-  <p class="muted">Explore our pellet and granule offerings. Select a category to view details.</p>
+  <p class="muted">Explore our pellets and granules offerings. Select a category to view details.</p>
   <div class="grid cols-4" style="margin-top:16px">
     <% categories.forEach(category => { %>
       <a class="card" href="<%= category.route %>">
