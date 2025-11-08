@@ -37,6 +37,8 @@
   // Fix back button: remove fade-out class when page is shown from cache
   window.addEventListener('pageshow', (e)=>{
     document.body.classList.remove('page-fade-out');
+    // Also ensure all reveal elements are visible
+    document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in-view'));
   });
   // Background ASMR canvas animation (refined capsules + swirling pellets)
   (function(){
