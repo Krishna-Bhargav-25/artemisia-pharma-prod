@@ -1,0 +1,22 @@
+<% if (products && products.length > 0) { %>
+  <table class="table">
+    <thead>
+      <tr>
+        <% Object.keys(products[0]).forEach(header => { %>
+          <th><%= header %></th>
+        <% }) %>
+      </tr>
+    </thead>
+    <tbody>
+      <% products.forEach(product => { %>
+        <tr>
+          <% Object.values(product).forEach(value => { %>
+            <td><%= value %></td>
+          <% }) %>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } else { %>
+  <p class="muted">No products available at the moment. Please check back later.</p>
+<% } %>

@@ -3,25 +3,15 @@
   <h1>Products</h1>
   <p class="muted">Explore our pellet and granule offerings. Select a category to view details.</p>
   <div class="grid cols-4" style="margin-top:16px">
-    <a class="card" href="/products/ir-pellets">
-      <h3>IR Pellets</h3>
-      <p>Immediate Release pellets</p>
-    </a>
-    <a class="card" href="/products/sr-cr-pr-pellets">
-      <h3>SR/CR/PR Pellets</h3>
-      <p>Sustained/Controlled/Prolonged Release</p>
-    </a>
-    <a class="card" href="/products/dr-ec-pellets">
-      <h3>EC/DR Pellets</h3>
-      <p>Enteric-Coated/Delayed Release</p>
-    </a>
-    <a class="card" href="/products/granules">
-      <h3>Granules</h3>
-      <p>High-quality pharmaceutical granules</p>
-    </a>
-    <a class="card" href="/products/inert-core-pellets">
-      <h3>INERT CORE PELLETS</h3>
-      <p>Neutral cores for layered formulations</p>
+    <% categories.forEach(category => { %>
+      <a class="card" href="<%= category.route %>">
+        <h3><%= category.title %></h3>
+        <p><%= category.description %></p>
+      </a>
+    <% }) %>
+  </div>
+</section>
+<%- include('../partials/footer') %>
     </a>
   </div>
 </section>

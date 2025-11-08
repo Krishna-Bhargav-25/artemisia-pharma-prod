@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const nodemailer = require('nodemailer');
+const { loadProductData, getCategories } = require('./utils/excelLoader');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,22 +25,31 @@ app.get('/about', (req, res) => {
 });
 
 app.get('/products', (req, res) => {
-  res.render('products/index', { title: 'Products - Artemisia Pharma' });
+  const categories = getCategories();
+  res.render('products/index', { title: 'Products - Artemisia Pharma', categories });
 });
 app.get('/products/ir-pellets', (req, res) => {
-  res.render('products/ir-pellets', { title: 'IR Pellets - Artemisia Pharma' });
+  const products = loadProductData('ir-pellets');
+  res.render('products/ir-pellets', { title: 'IR Pellets - Artemisia Pharma', products });
 });
 app.get('/products/sr-cr-pr-pellets', (req, res) => {
-  res.render('products/sr-cr-pr-pellets', { title: 'SR/CR/PR Pellets - Artemisia Pharma' });
+  const products = loadProductData('sr-cr-pr-pellets');
+  res.render('products/sr-cr-pr-pellets', { title: 'SR/CR/PR Pellets - Artemisia Pharma', products });
 });
 app.get('/products/dr-ec-pellets', (req, res) => {
-res.render('products/dr-ec-pellets', { title: 'EC/DR Pellets - Artemisia Pharma' });
+  const products = loadProductData('dr-ec-pellets');
+  res.render('products/dr-ec-pellets', { title: 'EC/DR Pellets - Artemisia Pharma', products });
 });
 app.get('/products/inert-core-pellets', (req, res) => {
   res.render('products/inert-core-pellets', { title: 'Inert Core Pellets - Artemisia Pharma' });
 });
 app.get('/products/granules', (req, res) => {
-  res.render('products/granules', { title: 'Granules - Artemisia Pharma' });
+  const products = loadProductData('granules');
+  res.render('products/granules', { title: 'Granules - Artemisia Pharma', products });
+});
+app.get('/products/inert-core-pellets', (req, res) => {
+  const products = loadProductData('inert-core-pellets');
+  res.render('products/inert-core-pellets', { title: 'Inert Core Pellets - Artemisia Pharma', products });
 });
 
 app.get('/contact', (req, res) => {
