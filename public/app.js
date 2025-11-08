@@ -75,7 +75,8 @@
       capsules.push({
         x: rng(0, w), y: rng(0, h),
         vx: rng(-0.004, 0.004), vy: rng(-0.022, -0.006),
-        len: rng(140, 260)*dpr, rad: rng(12, 20)*dpr,
+        // 50% smaller than previous config
+        len: rng(70, 130)*dpr, rad: rng(6, 10)*dpr,
         rot: rng(0, Math.PI), vrot: rng(-0.00012, 0.00012),
         col: Math.random() < 0.5 ? COL_CAP_A : COL_CAP_B,
         alpha: rng(0.22, 0.5), depth
@@ -230,9 +231,10 @@
 
     // Stylized elongated capsule (rounded ends)
     function drawCapsule(ctx, x, y, len, rad, color){
+      // Body with fully rounded ends
       ctx.fillStyle = color;
       ctx.beginPath();
-      const w2 = len/2, r = rad;
+      const w2 = Math.max(rad, len/2), r = Math.min(rad, len/2);
       ctx.moveTo(x - w2 + r, y - r);
       ctx.lineTo(x + w2 - r, y - r);
       ctx.quadraticCurveTo(x + w2, y - r, x + w2, y);
@@ -244,6 +246,16 @@
       ctx.quadraticCurveTo(x - w2, y - r, x - w2 + r, y - r);
       ctx.closePath();
       ctx.fill();
+
+      // Tiny partition seam in the middle (subtle)
+      ctx.save();
+      ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+      ctx.lineWidth = Math.max(1, 1.1 * dpr);
+      ctx.beginPath();
+      ctx.moveTo(x, y - r*0.9);
+      ctx.lineTo(x, y + r*0.9);
+      ctx.stroke();
+      ctx.restore();
     }
 
     requestAnimationFrame(step);
