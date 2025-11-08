@@ -1,0 +1,28 @@
+name: Deploy via gh-pages branch
+on:
+  push:
+    branches: [ main ]
+permissions:
+  contents: write
+concurrency:
+  group: pages-legacy
+  cancel-in-progress: true
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - run: npm ci || npm i
+      - run: npm run build
+        env:
+          FORM_ENDPOINT: ${{ secrets.FORM_ENDPOINT }}
+      - name: Publish to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
+          force_orphan: true
