@@ -33,6 +33,11 @@
     document.body.classList.add('page-fade-out');
     setTimeout(()=>{ window.location.href = a.href; }, 350);
   });
+
+  // Fix back button: remove fade-out class when page is shown from cache
+  window.addEventListener('pageshow', (e)=>{
+    document.body.classList.remove('page-fade-out');
+  });
   // Background ASMR canvas animation (refined capsules + swirling pellets)
   (function(){
     const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
