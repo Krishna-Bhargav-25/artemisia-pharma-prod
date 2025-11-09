@@ -21,8 +21,35 @@ const FORM_ENDPOINT = process.env.FORM_ENDPOINT || '';
 const VERSION = process.env.BUILD_VERSION || String(Date.now());
 
 const categories = getCategories();
+// Dynamically detect all Excel files and create product pages
+const excelFiles = fs.readdirSync(path.join(root, 'data')).filter(f => f.endsWith('.xlsx'));
+
+const productPages = excelFiles.map(file => {
+  const slug = file
+    .replace(/\.xlsx$/, '')
+    .toLowerCase()
+    .replace(/[\s,]+/g, '-'); // e.g. "IC Pellets.xlsx" -> "ic-pellets"
+
+  return {
+    view: `products/${slug}`,
+    out: `products/${slug}/index.html`,
+    data: {
+      title: `${file.replace(/\.xlsx$/, '')} - Artemisia Pharma`,
+      products: loadProductData(slug),
+    },
+  };
+});
 
 const pages = [
+  { view: 'index', out: 'index.html', data: { title: 'Artemisia Pharma' } },
+  { view: 'about', out: 'about/index.html', data: { title: 'About Us - Artemisia Pharma' } },
+  { view: 'products/index', out: 'products/index.html', data: { title: 'Products - Artemisia Pharma', categories } },
+  ...productPages,
+  { view: 'contact', out: 'contact/index.html', data: { title: 'Contact Us - Artemisia Pharma', sent: null, error: null } },
+  { view: 'thank-you', out: 'thank-you/index.html', data: { title: 'Thank You – Artemisia Pharma' } },
+];
+
+/* const pages = [
   { view: 'index', out: 'index.html', data: { title: 'Artemisia Pharma' } },
   { view: 'about', out: 'about/index.html', data: { title: 'About Us - Artemisia Pharma' } },
   { view: 'products/index', out: 'products/index.html', data: { title: 'Products - Artemisia Pharma', categories } },
@@ -33,7 +60,7 @@ const pages = [
   { view: 'products/inert-core-pellets', out: 'products/inert-core-pellets/index.html', data: { title: 'Inert Core Pellets - Artemisia Pharma', products: loadProductData('inert-core-pellets') } },
   { view: 'contact', out: 'contact/index.html', data: { title: 'Contact Us - Artemisia Pharma', sent: null, error: null } },
 ];
-
+*/
 function rewriteForNetlify(html) {
   let out = html
     .replace(/href=\"\/styles\.css\"/g, `href=\"/styles.css?v=${VERSION}\"`)
