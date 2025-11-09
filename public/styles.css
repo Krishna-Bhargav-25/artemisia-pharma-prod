@@ -64,10 +64,10 @@ section p.muted{font-weight:300;font-size:clamp(15px, 2vw, 16px);color:rgba(255,
 .about ul{color:var(--Text-Body);padding-left:20px}
 .about section{margin-bottom:18px}
 
-/* About page table header styling */
-.about table th {
-  color: var(--Primary-Brand); /* deep navy blue, matches headings */
-  background-color: var(--Table-Background-ASMR); /* subtle light blue-gray background */
+/* About page – table header color */
+section.about .table th {
+  color: var(--Primary-Brand);
+  background-color: var(--Table-Background-ASMR);
   border-bottom: 2px solid var(--border);
 }
 
