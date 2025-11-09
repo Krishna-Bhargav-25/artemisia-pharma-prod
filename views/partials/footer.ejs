@@ -6,10 +6,31 @@
       Email us
     </a>
   </div>
+
+<div class="footer-email-cta reveal">
+  <a id="email-link" class="email-link">
+    <span class="icon">📧</span>
+    <strong>Email Us:</strong>
+    <span id="email-text" class="email-text"></span>
+  </a>
+</div>
 </footer>
 
 <script>
-  // Dynamically set the current year in the footer
+  // Obfuscated email render
+  document.addEventListener("DOMContentLoaded", () => {
+    const user = "corporate.artemisia";
+    const domain = "arpharmalifelines.com";
+    const email = `${user}@${domain}`;
+    const link = document.getElementById("email-link");
+    const text = document.getElementById("email-text");
+    if (link && text) {
+      text.textContent = email;
+      link.href = `mailto:${email}`;
+    }
+  });
+
+  // Year auto-update
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 
