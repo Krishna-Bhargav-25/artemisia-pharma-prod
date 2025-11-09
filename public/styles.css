@@ -345,51 +345,71 @@ header .logo {
   }
 }
 
-/* ========== Footer Email Section ========== */
+/* ========== Footer Section (Transparent Background) ========== */
 
-/* Common footer style adjustments */
 footer {
   text-align: center;
-  padding: 1.5rem 1rem;
-  background: linear-gradient(to right, #005b4f, #2b8a6e); /* same gradient */
-  color: white;
+  padding: 2rem 1rem;
+  background: none; /* no background color or gradient */
+  color: #333; /* adjust if your site background is dark */
   font-family: 'Poppins', sans-serif;
+  border-top: 1px solid rgba(0, 0, 0, 0.1); /* subtle divider, optional */
 }
 
-/* Email bar container */
+/* Inner footer content */
+footer .container {
+  max-width: 1000px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Footer links (if any) */
+footer a {
+  color: #005b4f;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: #008f7a;
+}
+
+/* ========== Email Section ========== */
+
 .footer-email {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap; /* allow text wrapping for smaller screens */
-  gap: 0.5rem;
-  background: linear-gradient(to right, #005b4f, #2b8a6e);
-  color: white;
-  font-weight: 500;
+  flex-wrap: wrap; /* allows text wrapping on small screens */
+  gap: 0.4rem;
+  color: #005b4f;
+  font-weight: 600;
   padding: 1rem 0.8rem;
-  font-size: 1.1rem; /* base size for desktop */
+  font-size: 1.05rem; /* base size for desktop */
+  text-align: center;
 }
 
-/* Email label and link */
 .footer-email strong {
   margin-right: 0.3rem;
-  font-size: 1.05em;
 }
 
 .footer-email a {
-  color: #fff;
+  color: #005b4f;
   text-decoration: none;
-  font-weight: 600;
-  word-break: break-all; /* prevents overflow on small screens */
+  word-break: break-word;
 }
 
-/* ========== Responsive adjustments ========== */
+.footer-email a:hover {
+  text-decoration: underline;
+}
+
+/* ========== Responsive Adjustments ========== */
 
 /* Tablets and small devices */
 @media (max-width: 768px) {
   .footer-email {
     flex-direction: column;
-    text-align: center;
     font-size: 1rem;
     padding: 0.8rem;
   }
@@ -398,17 +418,13 @@ footer {
 /* Small mobile phones (under ~480px) */
 @media (max-width: 480px) {
   .footer-email {
-    font-size: 3.5vw; /* scales dynamically with viewport width */
-    padding: 0.7rem;
+    font-size: 3.3vw; /* scales dynamically with screen size */
     line-height: 1.4;
   }
+
   .footer-email strong {
     display: block;
     margin-bottom: 0.3rem;
   }
 }
 
-  .nav-links.open {
-    display: flex;
-  }
-}
