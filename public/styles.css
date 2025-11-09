@@ -55,6 +55,85 @@ section p.muted{font-weight:300;font-size:clamp(15px, 2vw, 16px);color:rgba(255,
 .table tbody tr:hover td{background-color:var(--Background-Light)}
 .table tbody tr:last-child td{border-bottom:none}
 
+/* ========== Mobile-Friendly Table Layout (ASMR About Page) ========== */
+
+/* General table fixes */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+  table-layout: auto; /* ensures flexible column widths */
+  word-wrap: break-word;
+}
+
+.table th,
+.table td {
+  padding: 12px 16px;
+  text-align: left;
+  vertical-align: top;
+  line-height: 1.4;
+  white-space: normal; /* allow text wrapping properly */
+  word-break: normal; /* prevent letter-by-letter breaks */
+}
+
+/* Prevent ugly word splitting */
+.table th,
+.table td {
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Responsive stacking on small devices */
+@media (max-width: 640px) {
+  .table thead {
+    display: none; /* hide header row for small screens */
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table tr {
+    margin-bottom: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: var(--shadow);
+  }
+
+  .table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    position: relative;
+  }
+
+  /* Add labels before each data cell */
+  .table td::before {
+    content: attr(data-label);
+    display: block;
+    font-weight: 600;
+    color: var(--Primary-Brand);
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+  }
+}
+
+/* Optional visual polish */
+@media (max-width: 480px) {
+  .table td {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+}
+
+
 /* About page typography */
 .about{background:rgba(255,255,255,.94);color:var(--Text-Body);padding:20px;border-radius:12px;box-shadow:var(--shadow)}
 .about h1{color:var(--Primary-Brand);font-size:32px}
