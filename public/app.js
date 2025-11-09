@@ -268,3 +268,26 @@
     requestAnimationFrame(step);
   })();
 })();
+
+// Run this code only after the entire DOM (HTML content) is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+  // Select the hamburger (menu) toggle button
+  const menuToggle = document.querySelector('.menu-toggle');
+  
+  // Select the navigation links container
+  const navLinks = document.querySelector('.nav-links');
+
+  // Only proceed if both elements exist on the page
+  if (menuToggle && navLinks) {
+    // Add a click event listener to the hamburger button
+    menuToggle.addEventListener('click', () => {
+      // Toggle the "open" class on the navigation links container
+      // This class controls visibility of the menu (CSS will handle the animation/display)
+      navLinks.classList.toggle('open');
+      
+      // Optional: toggle an "active" state on the button itself for animations
+      menuToggle.classList.toggle('active');
+    });
+  }
+});
+
