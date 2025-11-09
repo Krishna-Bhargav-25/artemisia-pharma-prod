@@ -198,3 +198,102 @@ table th, table td {
     text-align: center;
   }
 }
+
+/* ---------- HEADER BASE ---------- */
+header {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ---------- LOGO ---------- */
+header .logo {
+  max-width: 220px;
+  height: auto;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  header .logo {
+    max-width: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  header .logo {
+    max-width: 130px;
+  }
+}
+
+/* ---------- NAVIGATION ---------- */
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: #003366;
+  font-weight: 500;
+}
+
+.nav-links li a:hover {
+  color: #007bff;
+}
+
+/* ---------- HAMBURGER BUTTON ---------- */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.menu-toggle span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: #003366;
+  border-radius: 3px;
+}
+
+/* ---------- MOBILE MENU BEHAVIOR ---------- */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: flex;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 64px;
+    right: 0;
+    background: #fff;
+    flex-direction: column;
+    width: 200px;
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding: 1rem;
+    gap: 1rem;
+    display: none;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+}
