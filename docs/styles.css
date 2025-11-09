@@ -64,6 +64,13 @@ section p.muted{font-weight:300;font-size:clamp(15px, 2vw, 16px);color:rgba(255,
 .about ul{color:var(--Text-Body);padding-left:20px}
 .about section{margin-bottom:18px}
 
+/* About page – table header color */
+section.about .table th {
+  color: var(--Primary-Brand);
+  background-color: var(--Table-Background-ASMR);
+  border-bottom: 2px solid var(--border);
+}
+
 /* Product category grid */
 .grid{display:grid;gap:16px}
 @media(min-width:720px){.grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}}
