@@ -14,21 +14,38 @@
 </footer>
 
 <script>
-  // Obfuscated email render
-  window.addEventListener("load", () => {
-    const user = "corporate.artemisia";
-    const domain = "arpharmalifelines.com";
-    const email = `${user}@${domain}`;
-    const link = document.getElementById("email-link");
-    const text = document.getElementById("email-text");
-    if (link && text) {
-      text.textContent = email;
-      link.href = `mailto:${email}`;
+  // Render obfuscated email as soon as DOM is ready (safer than window.load)
+  document.addEventListener('DOMContentLoaded', () => {
+    try {
+      const user = "corporate.artemisia";
+      const domain = "arpharmalifelines.com";
+      const email = `${user}@${domain}`;
+      const subject = encodeURIComponent('Inquiry from Artemisia Pharma Website');
+      const mailto = `mailto:${email}?subject=${subject}`;
+
+      const link = document.getElementById("email-link");
+      const text = document.getElementById("email-text");
+      const yearEl = document.getElementById('year');
+
+      if (text) text.textContent = email;
+      if (link) {
+        // assign mailto in DOMContentLoaded (so it works even if some other script errors)
+        link.setAttribute('href', mailto);
+        // allow mail client open in same tab (common for mailto), but user agents vary
+        link.setAttribute('target', '_self');
+        link.setAttribute('rel', 'noopener noreferrer');
+        // ensure clickable even if some parent has pointer-events:none applied accidentally
+        link.style.pointerEvents = 'auto';
+        link.style.cursor = 'pointer';
+      } else {
+        console.warn('Footer: #email-link not found');
+      }
+
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+    } catch (err) {
+      console.error('Footer email render error', err);
     }
   });
-
-  // Year auto-update
-  document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 
 <script src="/app.js" defer></script>
