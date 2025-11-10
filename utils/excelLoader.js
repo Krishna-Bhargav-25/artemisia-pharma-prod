@@ -17,7 +17,7 @@ const dataDir = path.join(__dirname, '..', 'data');
 const PRODUCT_FILES = {
   'ir-pellets': 'IR Pellets.xlsx',
   'sr-cr-pr-pellets': 'SR,CR,PR Pellets.xlsx',
-  'dr-ec-pellets': 'EC,DR Pellets.xlsx',
+  'ec-dr-pellets': 'EC,DR Pellets.xlsx',
   'granules': 'Granules.xlsx',
   'inert-core-pellets': 'Inert Core Pellets.xlsx',
 };
