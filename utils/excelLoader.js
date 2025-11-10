@@ -87,7 +87,7 @@ function getCategories() {
       route: '/products/sr-cr-pr-pellets',
     },
     {
-      key: 'dr-ec-pellets',
+      key: 'ec-dr-pellets',
       title: 'EC/DR Pellets',
       description: 'Enteric-Coated/Delayed Release',
       route: '/products/dr-ec-pellets',
