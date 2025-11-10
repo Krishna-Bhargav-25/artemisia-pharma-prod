@@ -1,67 +1,36 @@
 </main>
-
 <footer>
-  <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-    <div>
-      © <span id="year"></span> Artemisia Pharma. All rights reserved.
-    </div>
-
-    <!-- Obfuscated email will be rendered here by JS -->
-    <div>
-      <a id="email-link" class="email-link" href="#" rel="noopener noreferrer" aria-label="Email Artemisia Pharma" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;">
-        <span class="icon" aria-hidden="true">📧</span>
-        <span id="email-text" style="font-weight:600;">Email Us</span>
-      </a>
-    </div>
+  <div class="container">
+    © <span id="year"></span> Artemisia Pharma. All rights reserved.
   </div>
 
-  <!-- If JS is disabled, show a friendly instruction instead of exposing the email -->
-  <noscript>
-    <style>
-      /* hide the JS-controlled link when JS is disabled? Not necessary — it's static until JS runs.
-         But we replace the visible label with this text to avoid exposing the mailto. */
-      #email-text { display: none; }
-    </style>
-    <div style="text-align:center; margin-top:12px; color:rgba(255,255,255,0.9); font-style:italic;">
-      To email us, please enable JavaScript in your browser.
-    </div>
-  </noscript>
+<div class="footer-email-cta reveal">
+  <a id="email-link" class="email-link">
+    <span class="icon">📧</span>
+    <strong>Email Us:</strong>
+    <span id="email-text" class="email-text"></span>
+  </a>
+</div>
 </footer>
 
 <script>
-  // Build and inject obfuscated mailto on DOMContentLoaded.
-  // This keeps the raw email out of static HTML and still gives a clickable mailto.
-  document.addEventListener('DOMContentLoaded', () => {
-    try {
-      const user = 'corporate.artemisia';
-      const domain = 'arpharmalifelines.com';
-      const email = `${user}@${domain}`;
-      const subject = 'Inquiry from Artemisia Pharma Website';
-      const mailto = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
-
-      const link = document.getElementById('email-link');
-      const text = document.getElementById('email-text');
-
-      if (link && text) {
-        // show the actual email address (visible) and set mailto href
-        text.textContent = email;
-        link.setAttribute('href', mailto);
-        link.setAttribute('aria-label', `Send email to ${email}`);
-        // optional: prevent crawler-friendly title
-        link.setAttribute('title', 'Email us');
-      }
-
-      // update copyright year
-      const yearEl = document.getElementById('year');
-      if (yearEl) yearEl.textContent = new Date().getFullYear();
-    } catch (err) {
-      // fail silently — do not expose email if JS errors occur
-      console.error('Footer email render error', err);
+  // Obfuscated email render
+  window.addEventListener("load", () => {
+    const user = "corporate.artemisia";
+    const domain = "arpharmalifelines.com";
+    const email = `${user}@${domain}`;
+    const link = document.getElementById("email-link");
+    const text = document.getElementById("email-text");
+    if (link && text) {
+      text.textContent = email;
+      link.href = `mailto:${email}`;
     }
   });
+
+  // Year auto-update
+  document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 
-<!-- keep your main app script if any; ensure only one app.js include exists and it is deferred -->
 <script src="/app.js" defer></script>
 </body>
 </html>
