@@ -1,44 +1,50 @@
 /*
-  Static prerender for Netlify Deployment
-  - Renders EJS views to dist/
-  - Copies public assets
-  - Automatically supports Netlify forms
+  Static prerender for Netlify (and GitHub Pages)
+  - Converts EJS views → dist/
+  - Auto-generates pages from Excel files in /data/
+  - Dynamically builds category list for /products/
 */
+
 const fs = require('fs');
 const fsp = require('fs/promises');
 const path = require('path');
 const ejs = require('ejs');
-const { loadProductData, getCategories } = require('../utils/excelLoader');
+const { loadProductData } = require('../utils/excelLoader');
 
 const root = path.join(__dirname, '..');
 const viewsDir = path.join(root, 'views');
 const distDir = path.join(root, 'dist');
 const publicDir = path.join(root, 'public');
+const docsDir = path.join(root, 'docs');
+const dataDir = path.join(root, 'data');
 
-// Base path for Netlify (root)
-const basePath = '';
+// Base path (use '/' for Netlify)
+const basePath = '/';
 const FORM_ENDPOINT = process.env.FORM_ENDPOINT || '';
 const VERSION = process.env.BUILD_VERSION || String(Date.now());
 
-const categories = getCategories();
-// Dynamically detect all Excel files and create product pages
-const excelFiles = fs.readdirSync(path.join(root, 'data')).filter(f => f.endsWith('.xlsx'));
+/* -----------------------------
+   🧩 Step 1: Auto-detect Excel files
+------------------------------ */
+const excelFiles = fs.readdirSync(dataDir).filter(f => f.endsWith('.xlsx'));
 
-const productPages = excelFiles.map(file => {
-  const slug = file
-    .replace(/\.xlsx$/, '')
-    .toLowerCase()
-    .replace(/[\s,]+/g, '-'); // e.g. "IC Pellets.xlsx" -> "ic-pellets"
-
-  return {
-    view: `products/${slug}`,
-    out: `products/${slug}/index.html`,
-    data: {
-      title: `${file.replace(/\.xlsx$/, '')} - Artemisia Pharma`,
-      products: loadProductData(slug),
-    },
-  };
+const categories = excelFiles.map(file => {
+  const name = file.replace(/\.xlsx$/, '');
+  const slug = name.toLowerCase().replace(/[\s,]+/g, '-'); // e.g. "IC Pellets" → "ic-pellets"
+  return { name, slug };
 });
+
+/* -----------------------------
+   🧩 Step 2: Build page list dynamically
+------------------------------ */
+const productPages = categories.map(cat => ({
+  view: `products/${cat.slug}`,
+  out: `products/${cat.slug}/index.html`,
+  data: {
+    title: `${cat.name} - Artemisia Pharma`,
+    products: loadProductData(cat.slug),
+  },
+}));
 
 const pages = [
   { view: 'index', out: 'index.html', data: { title: 'Artemisia Pharma' } },
@@ -46,33 +52,35 @@ const pages = [
   { view: 'products/index', out: 'products/index.html', data: { title: 'Products - Artemisia Pharma', categories } },
   ...productPages,
   { view: 'contact', out: 'contact/index.html', data: { title: 'Contact Us - Artemisia Pharma', sent: null, error: null } },
-  { view: 'thank-you', out: 'thank-you/index.html', data: { title: 'Thank You – Artemisia Pharma' } },
 ];
 
-/* const pages = [
-  { view: 'index', out: 'index.html', data: { title: 'Artemisia Pharma' } },
-  { view: 'about', out: 'about/index.html', data: { title: 'About Us - Artemisia Pharma' } },
-  { view: 'products/index', out: 'products/index.html', data: { title: 'Products - Artemisia Pharma', categories } },
-  { view: 'products/ir-pellets', out: 'products/ir-pellets/index.html', data: { title: 'IR Pellets - Artemisia Pharma', products: loadProductData('ir-pellets') } },
-  { view: 'products/sr-cr-pr-pellets', out: 'products/sr-cr-pr-pellets/index.html', data: { title: 'SR/CR/PR Pellets - Artemisia Pharma', products: loadProductData('sr-cr-pr-pellets') } },
-  { view: 'products/dr-ec-pellets', out: 'products/dr-ec-pellets/index.html', data: { title: 'EC/DR Pellets - Artemisia Pharma', products: loadProductData('dr-ec-pellets') } },
-  { view: 'products/granules', out: 'products/granules/index.html', data: { title: 'Granules - Artemisia Pharma', products: loadProductData('granules') } },
-  { view: 'products/inert-core-pellets', out: 'products/inert-core-pellets/index.html', data: { title: 'Inert Core Pellets - Artemisia Pharma', products: loadProductData('inert-core-pellets') } },
-  { view: 'contact', out: 'contact/index.html', data: { title: 'Contact Us - Artemisia Pharma', sent: null, error: null } },
-];
-*/
-function rewriteForNetlify(html) {
+/* -----------------------------
+   🧩 Step 3: Rewriter for assets and forms
+------------------------------ */
+function rewriteForPages(html) {
   let out = html
-    .replace(/href=\"\/styles\.css\"/g, `href=\"/styles.css?v=${VERSION}\"`)
-    .replace(/src=\"\/app\.js\"/g, `src=\"/app.js?v=${VERSION}\"`)
-    .replace(/src=\"\/logo\.(png|jpg|jpeg|svg)\"/g, `src=\"/logo.$1?v=${VERSION}\"`);
+    .replace(/href=\"\/styles\.css\"/g, `href=\"${basePath}styles.css?v=${VERSION}\"`)
+    .replace(/src=\"\/app\.js\"/g, `src=\"${basePath}app.js?v=${VERSION}\"`)
+    .replace(/src=\"\/logo\.(png|jpg|jpeg|svg)\"/g, `src=\"${basePath}logo.$1?v=${VERSION}\"`);
 
-  // Add Netlify form support
-  out = out.replace(/<form([^>]*?)>/i, `<form$1 netlify>`);
+  if (FORM_ENDPOINT) {
+    out = out.replace(
+      /<form([^>]*?)method=\"POST\"([^>]*?)action=\"[^\"]*\"/i,
+      `<form$1method="POST"$2action="${FORM_ENDPOINT}"`
+    );
+  } else {
+    out = out.replace(
+      /<form([^>]*?)method=\"POST\"([^>]*?)action=\"[^\"]*\"/i,
+      `<form$1method="POST"$2action="#" onsubmit="alert('This form is disabled on the static site.'); return false;"`
+    );
+  }
 
   return out;
 }
 
+/* -----------------------------
+   🧩 Step 4: Utility - copy static files
+------------------------------ */
 async function copyDir(src, dest) {
   await fsp.mkdir(dest, { recursive: true });
   for (const entry of await fsp.readdir(src, { withFileTypes: true })) {
@@ -83,31 +91,40 @@ async function copyDir(src, dest) {
   }
 }
 
+/* -----------------------------
+   🧩 Step 5: Main prerender execution
+------------------------------ */
 (async () => {
   await fsp.rm(distDir, { force: true, recursive: true });
   await fsp.mkdir(distDir, { recursive: true });
 
-  // Copy all static assets to dist/
+  // Copy static assets
   if (fs.existsSync(publicDir)) {
     await copyDir(publicDir, distDir);
-    console.log('✅ Copied public assets to dist/');
   }
 
-  // Render pages
+  // Render EJS views
   for (const p of pages) {
     const outPath = path.join(distDir, p.out);
     await fsp.mkdir(path.dirname(outPath), { recursive: true });
     const file = path.join(viewsDir, `${p.view}.ejs`);
-    const html = await ejs.renderFile(file, p.data, {
-      views: [viewsDir],
-      filename: file,
-    });
-    const rewritten = rewriteForNetlify(html);
+    if (!fs.existsSync(file)) {
+      console.warn(`⚠️ Skipped missing view: ${file}`);
+      continue;
+    }
+    const html = await ejs.renderFile(file, p.data, { views: [viewsDir] });
+    const rewritten = rewriteForPages(html);
     await fsp.writeFile(outPath, rewritten, 'utf8');
   }
 
-  console.log('✅ Static site generated in dist/ for Netlify');
+  // Copy to docs/ for GitHub Pages compatibility
+  await fsp.rm(docsDir, { force: true, recursive: true });
+  await fsp.mkdir(docsDir, { recursive: true });
+  await copyDir(distDir, docsDir);
+  await fsp.writeFile(path.join(docsDir, '.nojekyll'), '');
+  console.log('✅ Static site generated successfully.');
 })();
+
 /*
   Static prerender for GitHub Pages
   - Renders EJS views to dist/
