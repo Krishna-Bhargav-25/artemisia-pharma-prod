@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "node scripts/prerender.js"
   publish = "dist"
 
 [build.environment]
@@ -17,3 +17,11 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+[[plugins]]
+  package = "@netlify/plugin-sitemap"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self' data: blob: https:;"
