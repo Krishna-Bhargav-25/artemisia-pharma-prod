@@ -13,24 +13,6 @@
 </div>
 </footer>
 
-<script>
-  // Obfuscated email render
-document.addEventListener("DOMContentLoaded", () => {
-    const user = "corporate.artemisia";
-    const domain = "arpharmalifelines.com";
-    const email = `${user}@${domain}`;
-    const link = document.getElementById("email-link");
-    const text = document.getElementById("email-text");
-    if (link && text) {
-      text.textContent = email;
-      link.href = `mailto:${email}`;
-    }
-  });
-
-  // Year auto-update
-  document.getElementById('year').textContent = new Date().getFullYear();
-</script>
-
 <script src="/app.js" defer></script>
 </body>
 </html>
