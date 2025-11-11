@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
       menuToggle.classList.toggle('active');
     });
   }
-}
+});
 
 // Footer: dynamic email and year
 document.addEventListener("DOMContentLoaded", () => {
