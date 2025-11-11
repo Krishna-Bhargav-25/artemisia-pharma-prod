@@ -50,7 +50,14 @@ const pages = [
   { view: 'index', out: 'index.html', data: { title: 'Artemisia Pharma' } },
   { view: 'about', out: 'about/index.html', data: { title: 'About Us - Artemisia Pharma' } },
   { view: 'products/index', out: 'products/index.html', data: { title: 'Products - Artemisia Pharma', categories } },
-  ...productPages,
+  { view: 'products/ir-pellets', out: 'products/ir-pellets/index.html', data: { title: 'IR Pellets - Artemisia Pharma', products: loadProductData('ir-pellets') } },
+  { view: 'products/sr-cr-pr-pellets', out: 'products/sr-cr-pr-pellets/index.html', data: { title: 'SR/CR/PR Pellets - Artemisia Pharma', products: loadProductData('sr-cr-pr-pellets') } },
+  { view: 'products/dr-ec-pellets', out: 'products/dr-ec-pellets/index.html', data: { title: 'EC/DR Pellets - Artemisia Pharma', products: loadProductData('dr-ec-pellets') } },
+  { view: 'products/granules', out: 'products/granules/index.html', data: { title: 'Granules - Artemisia Pharma', products: loadProductData('granules') } },
+
+  // ✅ New Combinations category prerender
+  { view: 'products/combinations', out: 'products/combinations/index.html', data: { title: 'Combinations - Artemisia Pharma', products: loadProductData('combinations') } },
+
   { view: 'contact', out: 'contact/index.html', data: { title: 'Contact Us - Artemisia Pharma', sent: null, error: null } },
   { view: 'thank-you', out: 'thank-you/index.html', data: { title: 'Thank You – Artemisia Pharma' } },
 ];
