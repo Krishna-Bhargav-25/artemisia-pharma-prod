@@ -91,7 +91,7 @@ function getCategories() {
       key: 'ec-dr-pellets',
       title: 'EC/DR Pellets',
       description: 'Enteric-Coated/Delayed Release',
-      route: '/products/dr-ec-pellets',
+      route: '/products/ec-dr-pellets',
     },
     {
       key: 'granules',
