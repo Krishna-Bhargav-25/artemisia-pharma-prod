@@ -26,13 +26,18 @@ const VERSION = process.env.BUILD_VERSION || String(Date.now());
 /* -----------------------------
    🧩 Step 1: Auto-detect Excel files
 ------------------------------ */
-const excelFiles = fs.readdirSync(dataDir).filter(f => f.endsWith('.xlsx'));
+/* const excelFiles = fs.readdirSync(dataDir).filter(f => f.endsWith('.xlsx'));
 
 const categories = excelFiles.map(file => {
   const name = file.replace(/\.xlsx$/, '');
   const slug = name.toLowerCase().replace(/[\s,]+/g, '-'); // e.g. "IC Pellets" → "ic-pellets"
   return { name, slug };
 });
+*/
+const { loadProductData, getCategories } = require('../utils/excelLoader');
+
+// Load proper metadata-based categories
+const categories = getCategories();
 
 /* -----------------------------
    🧩 Step 2: Build page list dynamically
