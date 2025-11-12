@@ -578,4 +578,11 @@ footer a:hover {
     white-space: normal !important;
   }
 }
+/* Debug fix for hidden product categories */
+.reveal.categories {
+  opacity: 1 !important;
+  transform: none !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
 
