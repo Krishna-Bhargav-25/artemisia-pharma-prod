@@ -291,3 +291,22 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// Footer: dynamic email and year
+document.addEventListener("DOMContentLoaded", () => {
+  const link = document.getElementById("email-link");
+  const text = document.getElementById("email-text");
+  const yearSpan = document.getElementById("year");
+
+  if (link && text) {
+    const user = "corporate.artemisia";
+    const domain = "arpharmalifelines.com";
+    const email = `${user}@${domain}`;
+    text.textContent = email;
+    link.href = `mailto:${email}`;
+  }
+
+  if (yearSpan) {
+    yearSpan.textContent = new Date().getFullYear();
+  }
+});
+
