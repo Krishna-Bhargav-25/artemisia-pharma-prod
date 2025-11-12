@@ -9,7 +9,7 @@ const fs = require('fs');
 const fsp = require('fs/promises');
 const path = require('path');
 const ejs = require('ejs');
-const { loadProductData } = require('../utils/excelLoader');
+// const { loadProductData } = require('../utils/excelLoader');
 
 const root = path.join(__dirname, '..');
 const viewsDir = path.join(root, 'views');
