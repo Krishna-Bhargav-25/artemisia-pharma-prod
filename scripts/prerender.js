@@ -62,7 +62,7 @@ const pages = [
 
   // ✅ New Combinations category prerender
   { view: 'products/combinations', out: 'products/combinations/index.html', data: { title: 'Combinations - Artemisia Pharma', products: loadProductData('combinations') } },
-
+  { view: 'products/inert-core-pellets', out: 'products/inert-core-pellets/index.html', data: { title: 'Inert Core Pellets - Artemisia Pharma', products: loadProductData('inert-core-pellets') } },
   { view: 'contact', out: 'contact/index.html', data: { title: 'Contact Us - Artemisia Pharma', sent: null, error: null } },
   { view: 'thank-you', out: 'thank-you/index.html', data: { title: 'Thank You – Artemisia Pharma' } },
 ];
