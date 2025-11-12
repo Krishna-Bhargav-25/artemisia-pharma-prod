@@ -76,7 +76,9 @@ function rewriteForPages(html) {
     .replace(/src=\"\/app\.js\"/g, `src=\"${basePath}app.js?v=${VERSION}\"`)
     .replace(/src=\"\/logo\.(png|jpg|jpeg|svg)\"/g, `src=\"${basePath}logo.$1?v=${VERSION}\"`);
 
-  if (FORM_ENDPOINT) {
+ // ✅ Keep Netlify forms intact — do NOT rewrite <form> tags
+// Netlify scans HTML at build time, so any rewrite breaks detection
+  /* if (FORM_ENDPOINT) {
     out = out.replace(
       /<form([^>]*?)method=\"POST\"([^>]*?)action=\"[^\"]*\"/i,
       `<form$1method="POST"$2action="${FORM_ENDPOINT}"`
@@ -87,7 +89,7 @@ function rewriteForPages(html) {
       `<form$1method="POST"$2action="#" onsubmit="alert('This form is disabled on the static site.'); return false;"`
     );
   }
-
+*/
   return out;
 }
 
